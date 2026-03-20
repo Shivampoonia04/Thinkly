@@ -398,6 +398,43 @@ a{ color:inherit; text-decoration:none; }
   width:100%;
 }
 
+.headerGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.headerInfo {
+  flex: 1;
+}
+
+.featureRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.headerStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media (max-width: 768px) {
+  .headerGrid {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .headerStatus {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .headerStatus .muted2 {
+    text-align: left !important;
+  }
+}
+
 @media (max-width: 600px){
   .container{
     padding: 16px;

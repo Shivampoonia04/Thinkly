@@ -3,6 +3,11 @@
 This is a chatbot I built for the **Cybersecurity for Developers** topic. 
 It uses **BM25 retrieval** to look through a small knowledge base of OWASP security patterns and then answers questions using an LLM (OpenAI).
 
+## Submission Links
+
+- **Deployed URL**: [https://thinkly-secure-code.vercel.app](https://thinkly-secure-code.vercel.app) *(Placeholder - please replace after deployment)*
+- **GitHub Repository**: [https://github.com/Shivampoonia04/Thinkly](https://github.com/Shivampoonia04/Thinkly)
+
 ## Why I built this
 
 I wanted to make a tool that helps developers quickly check secure coding practices. 

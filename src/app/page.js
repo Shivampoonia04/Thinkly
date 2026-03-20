@@ -16,8 +16,8 @@ export default function Page() {
           <ShieldAlert size={200} />
         </div>
 
-        <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
-          <div style={{ maxWidth: '65%' }}>
+        <div className="headerGrid" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="headerInfo">
             <div className="row" style={{ gap: 8, marginBottom: 8 }}>
               <div style={{ 
                 background: 'var(--brand)', 
@@ -44,7 +44,7 @@ export default function Page() {
               Built on OWASP standards to help you ship secure code faster.
             </p>
 
-            <div className="row" style={{ marginTop: 20, gap: 16 }}>
+            <div className="featureRow" style={{ marginTop: 20 }}>
               <div className="row" style={{ gap: 6 }}>
                 <Lock size={14} className="text-brand2" />
                 <span style={{ fontSize: 12, fontWeight: 600 }}>Zero-Trust Logic</span>
@@ -60,11 +60,11 @@ export default function Page() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-end' }}>
+          <div className="headerStatus">
             <div className="pill" style={{ cursor: 'default', background: 'rgba(124,92,255,0.1)', borderColor: 'rgba(124,92,255,0.3)' }}>
               <span style={{ color: 'var(--brand2)', fontWeight: 800 }}>●</span> ONLINE
             </div>
-            <div className="muted2" style={{ fontSize: 11, textAlign: 'right' }}>
+            <div className="muted2" style={{ fontSize: 11, textAlign: 'right', marginTop: 10 }}>
               CONTEXT: NEXT.JS / REACT / NODE<br />
               DATABASE: OWASP_KB_2024
             </div>
