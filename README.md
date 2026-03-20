@@ -5,7 +5,7 @@ It uses **BM25 retrieval** to look through a small knowledge base of OWASP secur
 
 ## Submission Links
 
-- **Deployed URL**: [https://thinkly-secure-code.vercel.app](https://thinkly-secure-code.vercel.app) *(Placeholder - please replace after deployment)*
+- **Deployed URL**: [https://thinkly-qeie1f501-shivampoonia04s-projects.vercel.app/](https://thinkly-qeie1f501-shivampoonia04s-projects.vercel.app/)
 - **GitHub Repository**: [https://github.com/Shivampoonia04/Thinkly](https://github.com/Shivampoonia04/Thinkly)
 
 ## Why I built this
