@@ -55,25 +55,8 @@ export async function POST(req) {
     .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content) }));
 
   const systemPrompt = `
-You are the "Secure Code Companion", an elite cybersecurity advisor for software engineers at Thinkly Labs.
-Your mission is to provide high-fidelity, actionable, and defensive engineering guidance.
-
-IDENTITY & TONE:
-- Professional, concise, and technical.
-- Focus on "Security by Design" and "Zero Trust" principles.
-- Use developer-centric language (mentioning frameworks like Next.js, React, Node.js).
-
-KNOWLEDGE CONSTRAINTS:
-- Use ONLY the provided Reference Notes as your primary source of truth.
-- If the notes are insufficient, state what information is missing (e.g., "I need to know your specific auth provider to give a precise answer").
-- Never make up security standards.
-
-RESPONSE STRUCTURE:
-1. **Summary**: A 1-2 sentence direct answer.
-2. **Implementation Checklist**: 5-7 concrete, technical steps. Use Markdown task lists [ ] if appropriate.
-3. **Code Example**: If relevant, provide a "Secure vs. Insecure" code comparison using Markdown code blocks.
-4. **Common Pitfalls**: 2-3 bullets on what developers often get wrong.
-5. **Verified Sources**: Reference the source titles provided in the context.
+You are a Secure Code Companion. Answer security questions technically and directly.
+Focus on practical mitigations and use the provided notes.
 
 Topic: ${topic}
 
@@ -130,34 +113,21 @@ ${referencesBlock}
     return new Response(JSON.stringify({ error: `Fetch error: ${err.message}` }), { status: 500 });
   }
 
-  // Fallback to Mock Response if Quota is exceeded (allows for a successful demo/walkthrough)
+  // Fallback to a static response if the API key has no balance
   if (isMocked || !reply) {
     reply = `
-**[SYSTEM: MOCK MODE ACTIVE due to Quota Limit]**
+I can't reach the OpenAI API right now (it might be a quota limit). 
+But based on our local security knowledge, here's how to handle that:
 
-I've analyzed your query regarding security. Based on the **Secure Code Companion** knowledge base, here is the expert guidance:
+### Secure Implementation
+1. **Always parameterize** your database queries.
+2. **Set HttpOnly** flags on all session cookies.
+3. **Validate** user input on the server, not just the UI.
 
-### Summary
-To secure this flow, you must implement a multi-layered defense focusing on input validation and secure output handling.
-
-### Implementation Checklist
-- [ ] **Parameterize all inputs**: Never concatenate strings into queries or commands.
-- [ ] **Enforce SameSite Cookies**: Set \`SameSite=Lax\` or \`Strict\` to mitigate CSRF risks.
-- [ ] **Contextual Encoding**: Encode data specifically for the context it's being rendered in (HTML, JS, etc.).
-- [ ] **Centralize AuthZ**: Perform all authorization checks on the server-side, never trusting the client.
-
-### Secure vs. Insecure Pattern
 \`\`\`javascript
-// SECURE: Parameterized Query
-const user = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
-
-// INSECURE: String Concatenation (Vulnerable to SQLi)
-const user = await db.query(\`SELECT * FROM users WHERE id = '\${userId}'\`);
+// Secure approach:
+db.execute("SELECT * FROM users WHERE id = ?", [userId]);
 \`\`\`
-
-### Common Pitfalls
-- Relying on client-side validation as the only line of defense.
-- Storing secrets or sensitive session data in \`localStorage\` where it's accessible via XSS.
 `.trim();
   }
 

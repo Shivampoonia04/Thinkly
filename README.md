@@ -1,74 +1,48 @@
 # Thinkly Labs — Secure Code Companion
 
-This is a topic-focused chatbot for **Cybersecurity for Developers**.
-It uses a lightweight, local **BM25 retrieval** over an in-app knowledge base (OWASP + secure coding patterns),
-then asks an LLM to answer using the retrieved references.
+This is a chatbot I built for the **Cybersecurity for Developers** topic. 
+It uses **BM25 retrieval** to look through a small knowledge base of OWASP security patterns and then answers questions using an LLM (OpenAI).
 
-## What I built (and why)
+## Why I built this
 
-When building secure software, developers need:
-- fast, practical guidance (what to do)
-- clear scope (what not to do)
-- references (why the answer is trustworthy)
+I wanted to make a tool that helps developers quickly check secure coding practices. 
+Instead of just a generic chat, I built this to focus specifically on security mitigations and practical checklists.
 
-The UI is centered around that: every answer includes **“Sources”** drawn from the knowledge base chunks.
+The UI shows the **Sources** used for each answer, so you know where the information is coming from.
 
-## Key "Frontend Thinking" Features
+## Features
 
-I focused on creating a professional, purpose-built experience rather than a generic chat wrapper:
-
-- **Professional "Security Advisor" UI**: A high-fidelity dark theme with glassmorphism, Lucide icons, and terminal-style accents to reflect the cybersecurity topic.
-- **Rich Markdown Rendering**: Full support for lists, bold text, and syntax-highlighted code blocks for clear technical guidance.
-- **Loading & Skeleton States**: Instead of a simple spinner, the bot uses animated skeletons and a "Thinking..." status to maintain a smooth, responsive feel.
-- **Empty State "Audit Dashboard"**: A structured entry screen with categorized suggestion cards to help users initialize a security audit immediately.
-- **Copy-to-Clipboard**: Every code block has a copy button, making it easy for developers to grab secure patterns.
-- **Verified Sources**: The UI explicitly shows which parts of the knowledge base were used to generate the answer, building trust.
-- **Resilient Mock Mode**: If the OpenAI quota is reached, the bot automatically switches to a high-quality "Mock Mode" to ensure the demo remains functional.
+- **Themed UI**: A dark, modern interface that fits the "security" theme.
+- **RAG Implementation**: Uses a local BM25 search to find relevant security notes before answering.
+- **Developer Tools**: I added things like code-block copying and Markdown support to make the answers easier to read and use.
+- **Reliable UI**: Added loading states (skeletons) and handled errors gracefully.
+- **Fallback Mode**: If the API key runs out of credits, it still shows a sample security response so the UI doesn't just break.
 
 ## Setup
 
-1. Install dependencies:
-
+1. Install everything:
 ```bash
 npm install
 ```
 
-2. Configure environment:
-
+2. Environment:
+Create a `.env.local` file and add:
 ```bash
-cp .env.example .env.local
+OPENAI_API_KEY=your_key_here
 ```
 
-Set:
-- `OPENAI_API_KEY`
-
-3. Run locally:
-
+3. Run it:
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` (or the port indicated in the terminal).
+## How it works
 
-## How retrieval works
+The server takes the user's question and searches through `src/lib/kb.js` using the BM25 algorithm. 
+It then sends the most relevant chunks to OpenAI to generate a grounded, technical response.
 
-Server-side:
-- The knowledge base is stored in `src/lib/kb.js`.
-- At runtime, the server builds chunks and computes BM25 scores.
-- For a user query, it selects the top matching chunks and includes them in the prompt.
-
-## Files of interest
-
-- `src/lib/kb.js`: the topic knowledge base + chunking
-- `src/app/api/chat/route.js`: retrieval + OpenAI call + **Mock Fallback**
-- `src/components/ChatClient.js`: the enhanced, themed chat UI
-
-## Loom Walkthrough Checklist
-
-When recording, show these details:
-1. **Initialize Audit**: Show the suggestion cards in the empty state.
-2. **Thinking State**: Ask a question and point out the skeleton loading.
-3. **Rich Content**: Show the Markdown rendering and task lists in the response.
-4. **Copy Code**: Demonstrate the copy-to-clipboard feature on a secure code block.
-5. **Sources**: Point out the "Verified Sources" section at the bottom of the response.
-6. **Error Resilience**: Mention that the bot has a mock fallback if API limits are hit.
+## Tech Stack
+- Next.js (App Router)
+- OpenAI API
+- Lucide React (Icons)
+- React Markdown
